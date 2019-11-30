@@ -54,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         task.execute("http://student.cs.hioa.no/~s325854/jsonromout.php");
         Log.d("--","//// --- IN onMapReady()");
         mMap.getUiSettings().setZoomControlsEnabled(true);
-
+        
         // mapActionListerners
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -83,6 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                 // Placing a marker on the touched position
                 markerFromClick = mMap.addMarker(markerOptions);
+                markerFromClickExists=true;
                 markerFromClick.showInfoWindow();
             }
         });
@@ -95,28 +96,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected String doInBackground(String... url) {
             String retur = "";
-            String line = "";
-            String romdata = "";
+            String romData = "";
+            String romBestillingData = "";
+
             try {
-                URL urlen = new URL(url[0]);
-                HttpURLConnection conn = (HttpURLConnection)
-                        urlen.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Accept",
-                        "application/json");
-                if (conn.getResponseCode() != 200) {
-                    throw new RuntimeException("Failed : HTTP error code : "
-                            + conn.getResponseCode());
-                }
-                BufferedReader br = new BufferedReader(new InputStreamReader(
-                        (conn.getInputStream())));
-                System.out.println("Output from Server .... \n");
-                while ((line = br.readLine()) != null) {
-                    romdata = romdata + line;
-                }
-                conn.disconnect();
+                romData = getRomData(url[0]);
+               // romBestillingData = getRomData(url[1]);
                 try {
-                    createRomModels(romdata);
+                    createRomModels(romData);
                     return retur;
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -126,6 +113,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             return retur;
         }
+
+        private String getRomData(String url) throws Exception {
+            String line = "";
+            String data="";
+            URL urlen = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection)
+                    urlen.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept",
+                    "application/json");
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (conn.getInputStream())));
+            System.out.println("Output from Server .... \n");
+            while ((line = br.readLine()) != null) {
+                data = data + line;
+            }
+            conn.disconnect();
+            return data;
+        }
+
+
 
         private List<Rom> createRomModels(String output) throws JSONException {
             System.out.println("---------------------- "+output);
