@@ -1,13 +1,17 @@
 package com.example.s325854mappe3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rom {
 
     public String navn ;
     public String beskrivelse;
-    public double latitude;
-    public double longitude;
+    public String latitude;
+    public String longitude;
+    public List<Rombestilling> romBestillinger = new ArrayList<>();
 
-    public Rom(String navn, String beskrivelse, double latitude, double longitude) {
+    public Rom(String navn, String beskrivelse, String latitude, String longitude) {
         this.navn = navn;
         this.beskrivelse = beskrivelse;
         this.latitude = latitude;
@@ -30,19 +34,19 @@ public class Rom {
         this.beskrivelse = beskrivelse;
     }
 
-    public double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 }
