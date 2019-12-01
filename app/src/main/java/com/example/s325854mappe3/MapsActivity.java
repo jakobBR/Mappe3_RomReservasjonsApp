@@ -70,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 Intent bestillingIntent = new Intent(view.getContext(), RegisterBestillingActivity.class);
                 bestillingIntent.putExtra("Rombestilling",new Rombestilling());
-                startActivityForResult(bestillingIntent);
+                startActivityForResult(bestillingIntent,200);
             }
         });
 
