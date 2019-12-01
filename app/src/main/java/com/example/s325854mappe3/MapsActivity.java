@@ -84,7 +84,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         visBestillinger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("visBestillinger", "onClick: "+"JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                Log.d("visBestillinger", "onClick: "+"Viserbestilliinger");
+                Intent listIntent = new Intent(view.getContext(), BestillingerActivity.class);
+                Rom r = markerRomMap.get(markerFromClick);
+                System.out.println(r.romBestillinger.get(0).getFra());
+                listIntent.putExtra("Arraylist",r.romBestillinger);
+                startActivity(listIntent);
                 /*
                 Intent bestillingIntent = new Intent(view.getContext(), RegisterBestillingActivity.class);
                 bestillingIntent.putExtra("Rombestilling",new Rombestilling());
@@ -178,8 +183,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             markerFromClick = mMap.addMarker(markerOptions);
             markerFromClickExists = true;
             markerFromClick.showInfoWindow();
+            romMarkers.add(markerFromClick);
+            markerRomMap.put(markerFromClick,rom);
             System.out.println("value url "+romList.indexOf(rom));
             System.out.println("size romListe "+romList.size());
+
             postRom task = new postRom();
             System.out.println("Rom index: "+String.valueOf(romList.indexOf(rom)));
             task.execute(String.valueOf(romList.indexOf(rom)));
