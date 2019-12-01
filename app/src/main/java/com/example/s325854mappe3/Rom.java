@@ -6,13 +6,22 @@ import java.util.List;
 
 public class Rom implements Serializable {
 
+    public String ID;
     public String navn ;
     public String beskrivelse;
     public String latitude;
     public String longitude;
-    public List<Rombestilling> romBestillinger = new ArrayList<>();
+    public ArrayList<Rombestilling> romBestillinger = new ArrayList<>();
 
     public Rom(String navn, String beskrivelse, String latitude, String longitude) {
+        this.navn = navn;
+        this.beskrivelse = beskrivelse;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Rom(String ID,String navn, String beskrivelse, String latitude, String longitude) {
+        this.ID = ID;
         this.navn = navn;
         this.beskrivelse = beskrivelse;
         this.latitude = latitude;

@@ -55,6 +55,7 @@ public class RegisterRomActivity extends AppCompatActivity {
                     int resultCode = 100;
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("Rom", rom);
+                    System.out.println("///// In register"+rom.getNavn());
                     setResult(resultCode, resultIntent);
                     finish();
                 } else {
@@ -70,10 +71,10 @@ public class RegisterRomActivity extends AppCompatActivity {
             return false;
         }
         rom = (Rom) getIntent().getSerializableExtra("Rom");
-        Log.d("tag", "addrom:   "+rom.getLatitude()+rom.getLongitude());
 
         rom.setNavn(romNavn.getText().toString());
         rom.setBeskrivelse(romBeskrivelse.getText().toString());
+
         return true;
     }
 

@@ -103,7 +103,9 @@ public class RegisterBestillingActivity extends AppCompatActivity implements Dat
                 TextUtils.isEmpty(hourFra.getText()) ||
                 TextUtils.isEmpty(minuteFra.getText()) ||
                 TextUtils.isEmpty(hourTil.getText()) ||
-                TextUtils.isEmpty(minuteTil.getText())
+                TextUtils.isEmpty(minuteTil.getText()) ||
+                calendarFra == null
+
         )
         {
             return false;
