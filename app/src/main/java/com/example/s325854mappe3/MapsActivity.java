@@ -1,10 +1,13 @@
 package com.example.s325854mappe3;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,6 +18,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +39,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean markerFromClickExists;
     private List<Marker> romMarkers = new ArrayList<>();
     private List<Rom> romList = new ArrayList<>();
+    MaterialButton addRom;
+    MaterialButton addBestilling;
+    ConstraintLayout parentLayout;
 
     TextView textView;
 
@@ -45,6 +52,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        parentLayout = (ConstraintLayout) findViewById(R.id.mapsConstraint);
+        addRom =(MaterialButton) findViewById(R.id.rom_add_btn);
+        addBestilling =(MaterialButton) findViewById(R.id.bestilling_add_btn);
+
+        addRom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LatLng pos = markerFromClick.getPosition();
+                Intent romIntent = new Intent(view.getContext(), RegisterRomActivity.class);
+                romIntent.putExtra("Rom",new Rom(String.valueOf(pos.latitude),String.valueOf(pos.longitude)));
+                startActivityForResult(romIntent,100);
+            }
+        });
+        addBestilling.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent bestillingIntent = new Intent(view.getContext(), RegisterBestillingActivity.class);
+                bestillingIntent.putExtra("Rombestilling",new Rombestilling());
+                startActivityForResult(bestillingIntent);
+            }
+        });
+
+        parentLayout.removeView(addRom);
+        parentLayout.removeView(addBestilling);
+
+
+
     }
 
     @Override
@@ -54,15 +88,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         task.execute("http://student.cs.hioa.no/~s325854/jsonromout.php");
         Log.d("--","//// --- IN onMapReady()");
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        
         // mapActionListerners
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Log.d("onMapReady", "onMarkerClick: ");
                 marker.showInfoWindow();
-                //TODO
-                // display legg til rombestilling knapp
+                if (addRom.getParent() != null) parentLayout.removeView(addRom);
+                displayAddBestilling();
+                markerFromClick=marker;
+
                 return true;
             }
         });
@@ -70,25 +105,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                if (addBestilling.getParent() != null)parentLayout.removeView(addBestilling);
                 if (markerFromClickExists){
                     markerFromClick.remove();
+                    markerFromClickExists=false;
+                    markerFromClick=null;
+                    if (addRom.getParent() != null) parentLayout.removeView(addRom);
+                } else {
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(latLng);
+                    markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    markerFromClick = mMap.addMarker(markerOptions);
+                    markerFromClickExists = true;
+                    markerFromClick.showInfoWindow();
+                    displayAddRom();
                 }
-                // Creating a marker
-                MarkerOptions markerOptions = new MarkerOptions();
-                // Setting the position for the marker
-                markerOptions.position(latLng);
-                // Setting the title for the marker.
-                markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-                // Animating to the touched position
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                // Placing a marker on the touched position
-                markerFromClick = mMap.addMarker(markerOptions);
-                markerFromClickExists=true;
-                markerFromClick.showInfoWindow();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 100) {
+            System.out.println("Roooooooooooooooooooooom");
+        }
+
+        if(requestCode == 200) {
+            System.out.println("Roooooooooooooooooooooombestilling");
+        }
+    }
 
 
+    private void displayAddRom() {
+        if(addRom.getParent()==null){
+            parentLayout.addView(addRom);
+        }
+    }
+
+    private void displayAddBestilling() {
+        if(addBestilling.getParent()==null){
+            parentLayout.addView(addBestilling);
+        }
     }
 
     private class getJSON extends AsyncTask<String, Void,String> {
@@ -138,7 +198,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-
         private List<Rom> createRomModels(String output) throws JSONException {
             System.out.println("---------------------- "+output);
             JSONArray mat = new JSONArray(output);
@@ -156,9 +215,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         protected void onPostExecute(String ss) {
-            Log.d("----","//// --- IN onPostExecute()");
-            System.out.println("//// --- IN onPostExecute() romList size"+romList.size());
-
+            Log.d("----","//// --- IN onPostExecute() romList size"+romList.size());
             for (int i = 0 ; i < romList.size(); i++ ){
                 Rom r = romList.get(i);
                 LatLng pos = new LatLng(Double. parseDouble(r.latitude),Double.parseDouble(r.longitude));
@@ -177,9 +234,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         protected String doInBackground(String... url) {
-            System.out.println("//// --- IN postData()");
-            Log.d("----","//// --- IN postData()");
-            System.out.println("//// --- romList size"+romList.size());
+            Log.d("----","//// --- IN postData()--- romList size"+romList.size());
             String retur = "";
             try {
                 Rom r = romList.get(Integer.valueOf(url[0]));            System.out.println("romListe:  "+r.latitude);
@@ -210,7 +265,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(String ss) {
             Log.d("----","//// --- IN postData onPostExecute()");
-            System.out.println("//// --- IN postData onPostExecute()");
         }
     }
 }

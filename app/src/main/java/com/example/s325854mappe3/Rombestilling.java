@@ -1,6 +1,8 @@
 package com.example.s325854mappe3;
 
-public class Rombestilling {
+import java.io.Serializable;
+
+public class Rombestilling implements Serializable {
 
 
     public String getTil() {
@@ -22,6 +24,9 @@ public class Rombestilling {
     public Rombestilling(String til, String fra) {
         this.til = til;
         this.fra = fra;
+    }
+
+    public Rombestilling() {
     }
 
     public String til;

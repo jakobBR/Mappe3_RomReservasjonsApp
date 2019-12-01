@@ -1,4 +1,34 @@
 <resources>
     <string name="app_name">s325854mappe3</string>
     <string name="title_activity_maps">Map</string>
+    <string name="restaurant_order_hint">Angi restaurantnavn</string>
+    <string name="defaultSMS">Du har Restaurant Bestilling i dag</string>
+    <string name="notificationTitle">Du har bestilling i dag</string>
+    <string name="notificationText">På </string>
+    <string name="notificationTextMultiple">Du har bestilling i dag på flere restauranter </string>
+    <string name="preference_file_key">s325854s325912.mappe2.preferences</string>
+    <string name="reg_rom_navn">Rom Navn:</string>
+    <string name="reg_rom_navn_hint">F.eks. PS126</string>
+    <string name="reg_rom_beskrivelse">Rom Beskrivelse:</string>
+    <string name="reg_rom_beskrivelse_hint">Feks: Stort Auditorium. Kapasitet 136</string>
+    <string name="reg_res_type">Type:</string>
+    <string name="reg_res_type_hint">F.eks. Pizzeria</string>
+    <string name="nullstill">NULLSTILL</string>
+    <string name="reg_lagre">Legg Til Bestilling</string>
+    <string name="reg_rom_knapp">Legg Til Rom</string>
+    <string name="reg_friend_name">Navn på venn:</string>
+    <string name="reg_bestilling_til">Velg Varighet På Reservasjonen </string>
+    <string name="reg_bestilling_fra">Bestill Fra:</string>
+    <string name="reg_order_velg_dato">Klikk her for å velge dato</string>
+    <string name="time_sperator">:</string>
+    <string name="LagreTid">lagre utsendelse tidspunkt</string>
+    <string name="reg_bestilling_info">Velg Tidspunkt For Bestillingen</string>
+    <string name="reg_rom_info">Fyll Inn RomInfo I Feltene</string>
+    <string name="add_rom">Rom</string>
+    <string name="add_bestilling">Bestilling</string>
+
+
+
+
+
 </resources>

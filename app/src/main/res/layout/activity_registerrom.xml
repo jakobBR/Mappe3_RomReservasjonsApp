@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rom_constraint"
+    tools:context=".RegisterRomActivity">
+
+    <FrameLayout
+        android:id="@+id/rom_reg_fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/reg_rom_name_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/listSeparatorTextViewStyle"
+
+            android:text="@string/reg_rom_navn" />
+
+        <EditText
+            android:id="@+id/rom_inn_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:layout_marginBottom="40sp"
+            android:hint="@string/reg_rom_navn_hint"
+            android:inputType="textShortMessage"
+            tools:ignore="Autofill" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/listSeparatorTextViewStyle"
+
+            android:text="@string/reg_rom_beskrivelse" />
+
+        <EditText
+            android:id="@+id/rom_inn_beskrivelse"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="12"
+            android:textSize="13sp"
+            android:hint="@string/reg_rom_beskrivelse_hint"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            tools:ignore="Autofill" />
+
+
+
+</LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/input_rom_add_btn"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reg_rom_knapp"
+        android:layout_marginTop="32dp"
+        app:icon="@drawable/ic_add"
+        app:iconGravity="end"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_rom_name_wrapper" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,10 @@
 package com.example.s325854mappe3;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rom {
+public class Rom implements Serializable {
 
     public String navn ;
     public String beskrivelse;
@@ -14,6 +15,11 @@ public class Rom {
     public Rom(String navn, String beskrivelse, String latitude, String longitude) {
         this.navn = navn;
         this.beskrivelse = beskrivelse;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Rom(String latitude, String longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
