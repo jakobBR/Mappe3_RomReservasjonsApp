@@ -110,14 +110,14 @@ public class RegisterBestillingActivity extends AppCompatActivity implements Dat
         {
             return false;
         }
-        calendarFra.set(Calendar.HOUR,Integer.valueOf(hourFra.getText().toString()));
+        calendarFra.set(Calendar.HOUR_OF_DAY,Integer.valueOf(hourFra.getText().toString()));
         calendarFra.set(Calendar.MINUTE,Integer.valueOf(minuteFra.getText().toString()));
         rombestilling = (Rombestilling) getIntent().getSerializableExtra("Rombestilling");
         Log.d("tag", "addBestilling: calendatfra after "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendarFra.getTime()));
         rombestilling.fra = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendarFra.getTime());
 
         Calendar calendarTil = calendarFra;
-        calendarTil.add(Calendar.HOUR,Integer.valueOf(hourTil.getText().toString()));
+        calendarTil.add(Calendar.HOUR_OF_DAY,Integer.valueOf(hourTil.getText().toString()));
         calendarTil.add(Calendar.MINUTE,Integer.valueOf(minuteTil.getText().toString()));
         Log.d("tag", "addBestilling: calendar til after "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendarTil.getTime()));
         rombestilling.til = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendarFra.getTime());

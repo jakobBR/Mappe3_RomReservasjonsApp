@@ -4,6 +4,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,9 +89,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("visBestillinger", "onClick: "+"Viserbestilliinger");
                 Intent listIntent = new Intent(view.getContext(), BestillingerActivity.class);
                 Rom r = markerRomMap.get(markerFromClick);
-                System.out.println(r.romBestillinger.get(0).getFra());
-                listIntent.putExtra("Arraylist",r.romBestillinger);
-                startActivity(listIntent);
+                if (r.romBestillinger.size()>1) {
+                    System.out.println(r.romBestillinger.get(0).getFra());
+                    listIntent.putExtra("Arraylist", r.romBestillinger);
+                    startActivity(listIntent);
+                }
                 /*
                 Intent bestillingIntent = new Intent(view.getContext(), RegisterBestillingActivity.class);
                 bestillingIntent.putExtra("Rombestilling",new Rombestilling());
